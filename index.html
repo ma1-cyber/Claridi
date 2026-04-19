@@ -23,15 +23,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #f8fafc;
+      --bg:          #f0f2f4;
       --surface:     #ffffff;
       --border:      #e2e8f0;
       --border-dark: #cbd5e1;
       --navy:        #1e3a5f;
       --navy-mid:    #2d5282;
-      --teal:        #0d9488;
-      --teal-light:  #f0fdfa;
-      --teal-dim:    rgba(13,148,136,0.08);
+      --teal:        #60a5fa;
+      --teal-light:  #eff6ff;
+      --teal-dim:    rgba(96,165,250,0.08);
       --amber:       #d97706;
       --amber-bg:    #fffbeb;
       --amber-border:#fde68a;
@@ -43,6 +43,7 @@
       --success:     #16a34a;
       --success-bg:  #f0fdf4;
     }
+    .di { color: #60a5fa; }
 
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
@@ -51,7 +52,11 @@
 
     /* ── Nav ── */
     nav { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; }
-    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo { display: flex; align-items: center; text-decoration: none; animation: logoPulse 3s ease-in-out infinite; }
+    @keyframes logoPulse {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(96,165,250,0.3)) drop-shadow(0 0 8px rgba(96,165,250,0.15)); }
+      50% { filter: drop-shadow(0 0 10px rgba(96,165,250,0.8)) drop-shadow(0 0 20px rgba(96,165,250,0.4)) drop-shadow(0 0 35px rgba(96,165,250,0.2)); }
+    }
     .nav-links { display: flex; align-items: center; gap: 32px; margin-left: 40px; }
     .nav-link { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.15s; }
     .nav-link:hover { color: var(--navy); }
@@ -85,8 +90,8 @@
 
     /* CTA */
     .cta-block { display: flex; flex-direction: column; gap: 10px; }
-    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .email-form { display: flex; gap: 8px; flex: 1; min-width: 0; }
+    .cta-row { display: flex; flex-direction: column; gap: 10px; }
+    .email-form { display: flex; gap: 8px; width: 100%; }
     .email-form input[type="email"] { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--border-dark); border-radius: 8px; padding: 11px 16px; font-size: 14px; color: var(--text); font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
     .email-form input[type="email"]::placeholder { color: #94a3b8; }
     .email-form input[type="email"]:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
@@ -124,15 +129,28 @@
     .hero-card-footer-label { font-size: 11px; color: var(--muted); }
     .hero-card-total { font-size: 11px; font-weight: 700; color: var(--success); }
 
+    /* ── EMR strip ── */
+    .emr-strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; overflow: hidden; }
+    .emr-strip-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 32px; padding: 0 48px; }
+    .emr-strip-label { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; flex-shrink: 0; }
+    .emr-divider { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+    .emr-track-wrap { flex: 1; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+    .emr-track { display: flex; gap: 56px; width: max-content; animation: scrollLogos 18s linear infinite; }
+    .emr-track:hover { animation-play-state: paused; }
+    @keyframes scrollLogos { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .emr-logo { font-size: 13px; font-weight: 700; color: #94a3b8; letter-spacing: -0.3px; white-space: nowrap; transition: color 0.2s; cursor: default; }
+    .emr-logo:hover { color: var(--navy); }
+
     /* ── Differentiators strip ── */
     .diff-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .diff-inner { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(3, 1fr); }
-    .diff { padding: 28px 32px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid var(--border); }
-    .diff:last-child { border-right: none; }
-    .diff-vs { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #94a3b8; margin-bottom: 2px; }
-    .diff-label { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .diff-sub { font-size: 13px; color: var(--muted); line-height: 1.55; }
-    .diff-tag { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--teal); background: var(--teal-light); border: 1px solid rgba(13,148,136,0.15); border-radius: 999px; padding: 2px 10px; }
+    .diff-inner { max-width: 1100px; margin: 0 auto; padding: 48px 48px; display: flex; align-items: flex-start; gap: 80px; }
+    .diff-statement { flex: 1; font-size: clamp(18px, 2.2vw, 24px); font-weight: 700; color: var(--navy); line-height: 1.4; letter-spacing: -0.4px; }
+    .diff-statement em { font-style: normal; color: var(--teal); }
+    .diff-points { flex: 0 0 360px; display: flex; flex-direction: column; gap: 20px; }
+    .diff-point { display: flex; align-items: flex-start; gap: 14px; }
+    .diff-point-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px; }
+    .diff-point-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .diff-point-text strong { color: var(--navy); font-weight: 600; }
 
     /* ── Section scaffolding ── */
     .section-kicker { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
@@ -141,31 +159,55 @@
 
     /* ── How it works ── */
     .how-section { max-width: 1100px; margin: 0 auto; padding: 80px 48px; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
-    .steps::before { content: ''; position: absolute; top: 18px; left: calc(33.33% / 2); right: calc(33.33% / 2); height: 1px; background: var(--border); z-index: 0; }
-    .step { padding: 0 32px 0 0; display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
-    .step:last-child { padding-right: 0; }
-    .step-number { width: 36px; height: 36px; border-radius: 10px; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .step-title { font-size: 15px; font-weight: 700; color: var(--navy); }
-    .step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step { display: grid; grid-template-columns: 96px 1fr; gap: 0; padding: 36px 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .step:first-child { border-top: 1px solid var(--border); }
+    .step-number { font-size: 56px; font-weight: 800; color: var(--border-dark); line-height: 1; letter-spacing: -2px; padding-top: 2px; }
+    .step-body { display: flex; flex-direction: column; gap: 8px; padding-top: 8px; }
+    .step-title { font-size: 17px; font-weight: 700; color: var(--navy); }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.65; max-width: 600px; }
     .step-outcome { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--success); margin-top: 4px; }
 
     /* ── Built for section ── */
     .for-section { background: var(--bg); padding: 80px 48px; border-top: 1px solid var(--border); }
     .for-inner { max-width: 1100px; margin: 0 auto; }
-    .for-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .for-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
-    .for-card:hover { border-color: var(--border-dark); box-shadow: 0 4px 16px rgba(30,58,95,0.06); }
-    .for-card.featured { border-color: rgba(13,148,136,0.3); background: linear-gradient(160deg, #fff 70%, #f0fdfa); }
-    .for-card-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); }
-    .for-card.featured .for-card-role { color: var(--teal); }
-    .for-card-name { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; }
-    .for-card-pain { font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.6; padding: 12px 14px; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--border-dark); }
-    .for-card.featured .for-card-pain { background: rgba(13,148,136,0.04); border-left-color: var(--teal); }
-    .for-card-solution { font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.55; }
-    .for-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-    .for-card-bullets li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
-    .for-card-bullets li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px; }
+    .for-tabs { display: flex; gap: 4px; margin-bottom: 32px; background: var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+    .for-tab { font-size: 13px; font-weight: 600; color: var(--muted); background: transparent; border: none; border-radius: 7px; padding: 8px 20px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+    .for-tab.active { background: var(--surface); color: var(--navy); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .for-panel { display: none; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .for-panel.active { display: grid; }
+    .for-panel-left { display: flex; flex-direction: column; gap: 20px; }
+    .for-panel-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); }
+    .for-panel-name { font-size: 26px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; line-height: 1.2; }
+    .for-panel-pain { font-size: 14px; color: var(--muted); font-style: italic; line-height: 1.7; padding: 16px 18px; background: var(--surface); border-radius: 8px; border-left: 3px solid var(--teal); }
+    .for-panel-solution { font-size: 15px; font-weight: 600; color: var(--navy); line-height: 1.6; }
+    .for-panel-right { display: flex; flex-direction: column; gap: 0; }
+    .for-panel-bullet { display: flex; align-items: flex-start; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .for-panel-bullet:first-child { border-top: 1px solid var(--border); }
+    .for-panel-bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px; }
+    .for-panel-bullet-text { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── CDI Dashboard mock ── */
+    .cdi-dashboard { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 20px 40px -12px rgba(30,58,95,0.08); }
+    .cdi-dash-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #f8fafc; border-bottom: 1px solid var(--border); }
+    .cdi-dash-title { font-size: 12px; font-weight: 600; color: var(--muted); }
+    .cdi-dash-meta { font-size: 11px; color: #94a3b8; }
+    .cdi-dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .cdi-dash-stat { background: var(--surface); padding: 12px 16px; }
+    .cdi-dash-stat-val { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; line-height: 1; margin-bottom: 3px; }
+    .cdi-dash-stat-val.green { color: var(--success); }
+    .cdi-dash-stat-val.blue { color: #60a5fa; }
+    .cdi-dash-stat-label { font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+    .cdi-dash-table { width: 100%; }
+    .cdi-dash-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: center; padding: 9px 16px; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .cdi-dash-row:last-child { border-bottom: none; }
+    .cdi-dash-row-head { background: #f8fafc; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; }
+    .cdi-dash-physician { font-weight: 600; color: var(--navy); }
+    .cdi-dash-gaps { font-size: 11px; font-weight: 700; color: var(--amber); background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 999px; padding: 2px 8px; text-align: center; }
+    .cdi-dash-roi { font-size: 11px; font-weight: 700; color: var(--success); }
+    .cdi-dash-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+    .cdi-dash-status.open { color: var(--amber); background: var(--amber-bg); border: 1px solid var(--amber-border); }
+    .cdi-dash-status.done { color: var(--success); background: var(--success-bg); border: 1px solid rgba(22,163,74,0.2); }
 
     /* ── Animated demo section ── */
     .demo-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 48px; }
@@ -203,6 +245,72 @@
     .demo-flag-card-btn:disabled { cursor: default; }
     .demo-restart { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; font-size: 12px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: 'Inter', sans-serif; transition: color 0.2s; }
     .demo-restart:hover { color: var(--navy); }
+
+    /* ── Demo view tabs ── */
+    .demo-view-tabs { display: flex; gap: 6px; margin-top: 20px; }
+    .demo-view-tab { font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; padding: 6px 16px; border-radius: 999px; border: 1px solid var(--border-dark); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .demo-view-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .demo-view-tab:hover:not(.active) { background: var(--bg); color: var(--navy); }
+    .demo-view-panel { display: none; }
+    .demo-view-panel.active { display: block; }
+
+    /* ── CDI specialist demo ── */
+    .cdi-spec-demo { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 20px 40px -12px rgba(30,58,95,0.1); }
+    .cdi-queue { border-right: 1px solid var(--border); }
+    .cdi-queue-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid var(--border); }
+    .cdi-queue-title { font-size: 12px; font-weight: 700; color: var(--navy); }
+    .cdi-queue-badge { font-size: 11px; font-weight: 600; color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 999px; }
+    .cdi-queue-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+    .cdi-queue-row:hover { background: #f8fafc; }
+    .cdi-queue-row.selected { background: var(--teal-light); border-left: 3px solid var(--teal); }
+    .cdi-queue-patient { font-size: 12px; font-weight: 600; color: var(--navy); }
+    .cdi-queue-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .cdi-queue-right { text-align: right; }
+    .cdi-queue-gaps { font-size: 11px; font-weight: 700; color: var(--teal); }
+    .cdi-queue-roi { font-size: 11px; color: var(--muted); }
+    .cdi-queue-status { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; margin-top: 3px; }
+    .cdi-queue-status.open { background: #fef9c3; color: #92400e; }
+    .cdi-queue-status.sent { background: #dbeafe; color: #1e40af; }
+    .cdi-queue-status.clean { background: #dcfce7; color: #166534; }
+    .cdi-detail { padding: 16px; overflow-y: auto; }
+    .cdi-detail-header { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .cdi-detail-sub { font-size: 11px; color: var(--muted); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .cdi-finding { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+    .cdi-finding-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .cdi-finding-title { font-size: 12px; font-weight: 700; color: var(--navy); line-height: 1.4; }
+    .cdi-finding-roi { font-size: 11px; font-weight: 700; color: var(--success); white-space: nowrap; }
+    .cdi-finding-meta { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+    .cdi-finding-query { font-size: 11px; color: var(--navy); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; line-height: 1.5; margin-bottom: 8px; font-style: italic; }
+    .cdi-finding-btn { font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; background: var(--navy); color: #fff; border: none; border-radius: 5px; padding: 5px 12px; cursor: default; }
+
+    /* ── Practice owner demo ── */
+    .owner-demo { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 20px 40px -12px rgba(30,58,95,0.1); }
+    .owner-demo-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid var(--border); }
+    .owner-demo-title { font-size: 12px; font-weight: 700; color: var(--navy); }
+    .owner-demo-meta { font-size: 11px; color: var(--muted); }
+    .owner-demo-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .owner-demo-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; grid-column: 1 / -1; }
+    .owner-demo-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+    .owner-demo-stat-val { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; }
+    .owner-demo-stat-val.green { color: var(--success); }
+    .owner-demo-stat-val.blue { color: var(--teal); }
+    .owner-demo-stat-val.red { color: #dc2626; }
+    .owner-demo-stat-label { font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 3px; }
+    .owner-panel-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .payer-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .payer-name { font-size: 12px; font-weight: 500; color: var(--navy); width: 130px; flex-shrink: 0; }
+    .payer-bar-wrap { flex: 1; background: var(--border); border-radius: 999px; height: 6px; }
+    .payer-bar { height: 6px; border-radius: 999px; background: var(--teal); }
+    .payer-bar.high { background: #dc2626; }
+    .payer-bar.mid { background: #f59e0b; }
+    .payer-pct { font-size: 11px; font-weight: 600; color: var(--muted); width: 32px; text-align: right; flex-shrink: 0; }
+    .rule-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .rule-row:last-child { border-bottom: none; }
+    .rule-name { color: var(--navy); font-weight: 500; }
+    .rule-rate { font-weight: 700; }
+    .rule-rate.high { color: #dc2626; }
+    .rule-rate.mid { color: #f59e0b; }
+    .rule-rate.low { color: var(--success); }
 
     /* ── Stats strip ── */
     .stats-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
@@ -286,15 +394,15 @@
       .nav-links { display: none; }
       .hero { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
       .hero-right { display: none; }
-      .diff-inner { grid-template-columns: 1fr; }
-      .diff { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
-      .diff:last-child { border-bottom: none; }
+      .diff-inner { flex-direction: column; gap: 32px; padding: 36px 24px; }
+      .diff-points { flex: none; width: 100%; }
       .how-section { padding: 56px 24px; }
-      .steps { grid-template-columns: 1fr; gap: 32px; }
-      .steps::before { display: none; }
-      .step { padding: 0; }
+      .step { grid-template-columns: 56px 1fr; }
+      .step-number { font-size: 40px; }
       .for-section { padding: 56px 24px; }
-      .for-cards { grid-template-columns: 1fr; }
+      .for-tabs { width: 100%; }
+      .for-tab { flex: 1; text-align: center; }
+      .for-panel.active { grid-template-columns: 1fr; gap: 32px; }
       .demo-section { padding: 56px 24px; }
       .live-demo { grid-template-columns: 1fr; }
       .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 40px 24px; }
@@ -352,62 +460,25 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-left">
-      <div class="eyebrow">
-        <span class="eyebrow-line"></span>
-        Real-time CDI · Point of care
-      </div>
-
       <h1>Documentation gaps.<br/><em>Caught before signing.</em></h1>
 
       <p class="subtitle">
-        Clari<span style="color:#60a5fa">DI</span> reads the note as it's written and surfaces missing diagnoses in a sidebar — before the physician clicks sign. No retrospective queries. No CDI back-and-forth.
+        Clari<span class="di">DI</span> reads the note as it's written and surfaces missing diagnoses in a sidebar — before the physician clicks sign. No retrospective queries. No CDI back-and-forth.
       </p>
 
-      <div class="comparison-strip">
-        <div class="comparison-row">
-          <span class="comparison-before">CDI query arrives 48h after signing</span>
-          <span class="comparison-arrow">→</span>
-          <span class="comparison-after">Gap flagged while note is open</span>
-        </div>
-        <div class="comparison-row">
-          <span class="comparison-before">Manual chart review misses findings</span>
-          <span class="comparison-arrow">→</span>
-          <span class="comparison-after">Every note audited in &lt;2 seconds</span>
-        </div>
-        <div class="comparison-row">
-          <span class="comparison-before">Revenue gap discovered at month-end</span>
-          <span class="comparison-arrow">→</span>
-          <span class="comparison-after">CC/MCC captured day of admission</span>
-        </div>
-      </div>
 
       <div class="trust-row">
+        <span class="trust-item">Physician-first design</span>
+        <span class="trust-dot"></span>
         <span class="trust-item">EMR-agnostic</span>
         <span class="trust-dot"></span>
-        <span class="trust-item">FHIR-ready</span>
+        <span class="trust-item">FHIR + CDS Hooks</span>
         <span class="trust-dot"></span>
         <span class="trust-item">FY2025 MS-DRG weights</span>
         <span class="trust-dot"></span>
-        <span class="trust-item">Physician-first design</span>
+        <span class="trust-item">Your data stays in your infrastructure</span>
       </div>
 
-      <div class="cta-block">
-        <p class="cta-note">Limited beta spots — priority given to inpatient practices.</p>
-        <div class="cta-row">
-          <form class="email-form" id="waitlistForm" onsubmit="handleWaitlist(event)">
-            <input type="email" placeholder="your@hospital.com" required />
-            <button type="submit" class="btn-primary">Join the Beta</button>
-          </form>
-          <button class="btn-secondary" onclick="openDemo()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Request a Demo
-          </button>
-        </div>
-        <div class="success-msg" id="waitlistSuccess">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          You're on the list. We'll be in touch within 24 hours.
-        </div>
-      </div>
     </div>
 
     <!-- Hero UI preview -->
@@ -416,7 +487,7 @@
         <div class="hero-card-header">
           <div>
             <div class="hero-card-title">Progress Note — Internal Medicine</div>
-            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">J. Doe · 55M · Unsigned</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">J. Doe · 55M · In Progress</div>
           </div>
           <span class="status-pill status-unsigned">3 gaps found</span>
         </div>
@@ -454,26 +525,73 @@
     </div>
   </section>
 
+  <!-- EMR strip -->
+  <div class="emr-strip">
+    <div class="emr-strip-inner">
+      <span class="emr-strip-label">Works with</span>
+      <div class="emr-divider"></div>
+      <div class="emr-track-wrap">
+        <div class="emr-track">
+          <span class="emr-logo">Epic</span>
+          <span class="emr-logo">Oracle Cerner</span>
+          <span class="emr-logo">athenahealth</span>
+          <span class="emr-logo">MEDITECH</span>
+          <span class="emr-logo">Allscripts</span>
+          <span class="emr-logo">DrChrono</span>
+          <span class="emr-logo">eClinicalWorks</span>
+          <span class="emr-logo">Epic</span>
+          <span class="emr-logo">Oracle Cerner</span>
+          <span class="emr-logo">athenahealth</span>
+          <span class="emr-logo">MEDITECH</span>
+          <span class="emr-logo">Allscripts</span>
+          <span class="emr-logo">DrChrono</span>
+          <span class="emr-logo">eClinicalWorks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Differentiators -->
   <div class="diff-section">
     <div class="diff-inner">
-      <div class="diff">
-        <div class="diff-vs">vs. retrospective CDI</div>
-        <div class="diff-label">Upstream, not after-the-fact</div>
-        <div class="diff-sub">Traditional CDI reviews charts after signing — or worse, after discharge. Clari<span style="color:#60a5fa">DI</span> works while the note is open.</div>
-        <span class="diff-tag">Real-time intervention</span>
+      <div style="flex:0 0 260px;">
+        <p class="section-kicker" style="margin-bottom:8px;">Why Clari<span class="di">DI</span>?</p>
+        <h2 class="section-heading" style="margin-bottom:16px;">Built different<br/>by design.</h2>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65;">Most CDI tools match keywords. Clari<span class="di">DI</span> understands clinical context — the difference between a flag that holds up to a payer audit and one that wastes a physician's time.</p>
       </div>
-      <div class="diff">
-        <div class="diff-vs">vs. opaque AI queries</div>
-        <div class="diff-label">Evidence-cited, not fabricated</div>
-        <div class="diff-sub">Every flag shows the exact sentence in the note that triggered it. No black-box suggestions. No physician pushback on unexplained queries.</div>
-        <span class="diff-tag">Full clinical transparency</span>
-      </div>
-      <div class="diff">
-        <div class="diff-vs">vs. CDI team overhead</div>
-        <div class="diff-label">Physician-accepted by design</div>
-        <div class="diff-sub">A sidebar suggestion takes 5 seconds to act on or dismiss. Designed so physicians accept it — not resent it.</div>
-        <span class="diff-tag">5-second workflow</span>
+      <div class="diff-points">
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Clinical context engine</strong> — negation, context, and co-morbidity interactions evaluated before any flag fires</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Findings cross-validated against each other</strong> — flags that conflict with the broader clinical picture are suppressed automatically</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Every suggestion ranked by clinical confidence and expected revenue</strong> — highest-yield gaps surface first, every time</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Staging, not just detection</strong> — CKD, malnutrition, and COPD are graded by severity because the difference between Stage 3 and Stage 4 is a different DRG</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>CURB-65, SOFA, and PSI built in</strong> — severity findings are validated against clinical scoring standards, not keyword matching</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Type 1 vs. Type 2 MI distinction</strong> — demand ischemia and primary cardiac events are separated at the engine level because they code and reimburse differently</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>ECG territory mapping</strong> — lead patterns are matched to anatomical territories to validate and support STEMI and NSTEMI findings</span>
+        </div>
+        <div class="diff-point">
+          <div class="diff-point-dot"></div>
+          <span class="diff-point-text"><strong>Longitudinal memory</strong> — prior encounter diagnoses are tracked and flagged when dropped or regressed in the current note</span>
+        </div>
       </div>
     </div>
   </div>
@@ -482,33 +600,50 @@
   <div class="how-section" id="how">
     <p class="section-kicker">How it works</p>
     <h2 class="section-heading">Upstream — before the chart closes</h2>
-    <p class="section-sub">Three steps. The entire workflow happens before the physician clicks sign. No retrospective review, no queries two days later.</p>
+    <p class="section-sub">Four steps. The first three happen before the physician clicks sign. The fourth closes the loop with your payers — automatically, in your own environment.</p>
     <div class="steps">
       <div class="step">
         <div class="step-number">01</div>
-        <div class="step-title">Physician writes the note</div>
-        <div class="step-desc">Clari<span style="color:#60a5fa">DI</span> reads the note in real time as it's drafted — vitals, labs, exam findings, imaging. No upload, no copy-paste.</div>
-        <div class="step-outcome">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Passive — zero physician effort required
+        <div class="step-body">
+          <div class="step-title">Physician writes the note</div>
+          <div class="step-desc">Clari<span class="di">DI</span> reads the note in real time as it's drafted — vitals, labs, exam findings, and diagnostics.</div>
+          <div class="step-outcome">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Passive — zero physician effort required
+          </div>
         </div>
       </div>
       <div class="step">
         <div class="step-number">02</div>
-        <div class="step-title">Gaps flagged with evidence</div>
-        <div class="step-desc">19+ clinical rules audit the note in under 2 seconds. Each finding cites the exact clinical signal — the sentence, lab value, or imaging finding — that supports it.</div>
-        <div class="step-outcome">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Full transparency — no opaque suggestions
+        <div class="step-body">
+          <div class="step-title">Gaps flagged with evidence</div>
+          <div class="step-desc">The engine audits the note in under 2 seconds. Each finding cites the exact clinical signal — the sentence, lab value, or imaging finding — that supports it.</div>
+          <div class="step-outcome">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Full transparency — no opaque suggestions
+          </div>
         </div>
       </div>
       <div class="step">
         <div class="step-number">03</div>
-        <div class="step-title">One click to complete</div>
-        <div class="step-desc">The physician adds specificity before signing. CDI sees completion rates. Finance sees CC/MCC revenue captured — in real time, not at month-end.</div>
-        <div class="step-outcome">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Revenue captured day of admission
+        <div class="step-body">
+          <div class="step-title">One click to complete</div>
+          <div class="step-desc">The physician adds specificity before signing. CDI sees completion rates. Finance sees CC/MCC revenue captured — in real time, not at month-end.</div>
+          <div class="step-outcome">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Revenue captured day of admission
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">04</div>
+        <div class="step-body">
+          <div class="step-title">Payers tell you what actually holds up</div>
+          <div class="step-desc">When insurers pay or deny a claim, that outcome is matched back to the original ClariDI finding — inside your own environment. Over time you see exactly which documentation gaps your payers push back on most, so queries get prioritized where they matter.</div>
+          <div class="step-outcome">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Gets smarter with every remittance — without sharing your data with us
+          </div>
         </div>
       </div>
     </div>
@@ -519,43 +654,162 @@
     <div class="for-inner">
       <p class="section-kicker">Built for every role in the workflow</p>
       <h2 class="section-heading">Different views. Same outcome.</h2>
-      <p class="section-sub">Clari<span style="color:#60a5fa">DI</span> serves three distinct stakeholders — each with their own interface and their own definition of success.</p>
+      <p class="section-sub">Clari<span class="di">DI</span> serves three distinct stakeholders — each with their own interface and their own definition of success.</p>
 
-      <div class="for-cards">
-        <div class="for-card">
-          <div class="for-card-role">For Physicians</div>
-          <div class="for-card-name">Your note. Your call.</div>
-          <div class="for-card-pain">"CDI sends me a query two days after I signed. By then I've seen 20 more patients and have no memory of that encounter."</div>
-          <div class="for-card-solution">Clari<span style="color:#60a5fa">DI</span> surfaces the gap while you're still in the note. One click to add the specificity, or one click to dismiss. Done.</div>
-          <ul class="for-card-bullets">
-            <li>Non-disruptive sidebar — doesn't interrupt your workflow</li>
-            <li>Evidence-cited — shows which sentence triggered the flag</li>
-            <li>5 seconds to act — or dismiss with one click, no follow-up</li>
-          </ul>
+      <div class="for-tabs">
+        <button class="for-tab active" onclick="switchTab('physicians')">Physicians</button>
+        <button class="for-tab" onclick="switchTab('cdi')">CDI Specialists</button>
+        <button class="for-tab" onclick="switchTab('owners')">Practice Owners</button>
+      </div>
+
+      <div class="for-panel active" id="tab-physicians">
+        <div class="for-panel-left">
+          <div class="for-panel-role">For Physicians</div>
+          <div class="for-panel-name">Your note. Your call.</div>
+          <div class="for-panel-solution">Clari<span class="di">DI</span> surfaces the gap while you're still in the note. One click to add the specificity, or one click to dismiss. Done.</div>
+        </div>
+        <div class="for-panel-right">
+          <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Non-disruptive sidebar — surfaces suggestions alongside your note without interrupting your workflow</div></div>
+          <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Evidence-cited — shows which sentence triggered the flag</div></div>
+          <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Dismiss in one click — no follow-up, no retrospective query</div></div>
+          <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Longitudinal awareness — bring in a prior note and ClariDI flags what was dropped or downgraded. Your EHR stores the result, not ours.</div></div>
+          <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">SmartText ready — physician queries export in EHR-native format, paste directly into Epic or Cerner with no reformatting</div></div>
+        </div>
+      </div>
+
+      <div class="for-panel" id="tab-cdi" style="grid-template-columns: 1fr 1.4fr;">
+        <div class="for-panel-left">
+          <div class="for-panel-role">For CDI Specialists</div>
+          <div class="for-panel-name">Every note. Pre-screened.</div>
+          <div class="for-panel-solution">Every note audited before the physician signs. Your team focuses on complex cases — Clari<span class="di">DI</span> handles the systematic gaps.</div>
+          <div class="for-panel-right" style="border:none; margin-top: 8px;">
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Confidence scores and clinical evidence per finding</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Longitudinal gap detection across prior encounters</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Payer denial history — see which rules get denied by which payers so queries are prioritized accordingly</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Batch audit mode — upload a full day's notes as a CSV, audit all at once, export findings as Excel or individual PDF queries in a ZIP</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Physician query templates pre-written and ready to send</div></div>
+          </div>
         </div>
 
-        <div class="for-card featured">
-          <div class="for-card-role">For CDI Specialists</div>
-          <div class="for-card-name">Every note. Pre-screened.</div>
-          <div class="for-card-pain">"We manually review hundreds of charts and still miss high-value findings that get denied or queried downstream."</div>
-          <div class="for-card-solution">Every note audited in under 2 seconds before the physician signs. Your team focuses on complex cases — Clari<span style="color:#60a5fa">DI</span> handles the systematic gaps.</div>
-          <ul class="for-card-bullets">
-            <li>19+ rules across cardiac, pulmonary, sepsis, renal, and more</li>
-            <li>Confidence scores and clinical evidence per finding</li>
-            <li>Physician query templates pre-written and ready to send</li>
-          </ul>
+        <!-- CDI Dashboard Mock -->
+        <div class="cdi-dashboard">
+          <div class="cdi-dash-header">
+            <span class="cdi-dash-title">CDI Workqueue — Today</span>
+            <span class="cdi-dash-meta">Apr 19 · Internal Medicine</span>
+          </div>
+          <div class="cdi-dash-stats">
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val">24</div>
+              <div class="cdi-dash-stat-label">Notes Audited</div>
+            </div>
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val green">11</div>
+              <div class="cdi-dash-stat-label">Gaps Flagged</div>
+            </div>
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val blue">$24K</div>
+              <div class="cdi-dash-stat-label">Open Opportunity</div>
+            </div>
+          </div>
+          <div class="cdi-dash-table">
+            <div class="cdi-dash-row cdi-dash-row-head">
+              <span>Physician</span>
+              <span>Gaps</span>
+              <span>Est. ROI</span>
+              <span>Status</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Dr. R. Patel</span>
+              <span class="cdi-dash-gaps">3 gaps</span>
+              <span class="cdi-dash-roi">+$12,800</span>
+              <span class="cdi-dash-status open">Open</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Dr. A. Torres</span>
+              <span class="cdi-dash-gaps">3 gaps</span>
+              <span class="cdi-dash-roi">+$11,200</span>
+              <span class="cdi-dash-status open">Open</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Dr. M. Chen</span>
+              <span class="cdi-dash-gaps">2 gaps</span>
+              <span class="cdi-dash-roi">+$7,600</span>
+              <span class="cdi-dash-status done">Captured</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Dr. S. Johnson</span>
+              <span class="cdi-dash-gaps">3 gaps</span>
+              <span class="cdi-dash-roi">+$9,800</span>
+              <span class="cdi-dash-status done">Captured</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="for-panel" id="tab-owners" style="grid-template-columns: 1fr 1.4fr;">
+        <div class="for-panel-left">
+          <div class="for-panel-role">For Practice Owners</div>
+          <div class="for-panel-name">Revenue. In real time.</div>
+          <div class="for-panel-solution">Real-time dashboard shows captured revenue, open opportunities, and ROI by physician, specialty, and admission.</div>
+          <div class="for-panel-right" style="border:none; margin-top: 8px;">
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">DRG Optimizer — shows your current DRG tier, the tier each captured finding moves you to, and the exact revenue delta. Computed from FY2025 MS-DRG weights, not estimates</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">Payer denial intelligence — insurance adjudication data joined to findings in your own environment, denial rates by rule and payer updated nightly</div></div>
+            <div class="for-panel-bullet"><div class="for-panel-bullet-dot"></div><div class="for-panel-bullet-text">ML denial risk prediction flags high-exposure documentation before it reaches the payer</div></div>
+          </div>
         </div>
 
-        <div class="for-card">
-          <div class="for-card-role">For Practice Owners</div>
-          <div class="for-card-name">Revenue. In real time.</div>
-          <div class="for-card-pain">"We see the CC/MCC gap in month-end revenue cycle reports — weeks after the encounter closed and the window to fix it is gone."</div>
-          <div class="for-card-solution">Real-time dashboard shows captured revenue, open opportunities, and ROI by physician, specialty, and admission.</div>
-          <ul class="for-card-bullets">
-            <li>MS-DRG tier uplift tied to each captured finding</li>
-            <li>Denial risk prediction flags high-exposure documentation</li>
-            <li>FHIR-ready integration with your existing billing workflow</li>
-          </ul>
+        <!-- Practice Owner Dashboard Mock -->
+        <div class="cdi-dashboard">
+          <div class="cdi-dash-header">
+            <span class="cdi-dash-title">Revenue Dashboard — MTD</span>
+            <span class="cdi-dash-meta">Apr 2026 · All Specialties</span>
+          </div>
+          <div class="cdi-dash-stats">
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val green">$214K</div>
+              <div class="cdi-dash-stat-label">Captured MTD</div>
+            </div>
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val blue">$89K</div>
+              <div class="cdi-dash-stat-label">Open Opportunity</div>
+            </div>
+            <div class="cdi-dash-stat">
+              <div class="cdi-dash-stat-val">71%</div>
+              <div class="cdi-dash-stat-label">Capture Rate</div>
+            </div>
+          </div>
+          <div class="cdi-dash-table">
+            <div class="cdi-dash-row cdi-dash-row-head">
+              <span>Specialty</span>
+              <span>Notes</span>
+              <span>Captured</span>
+              <span>Open</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Internal Medicine</span>
+              <span style="font-size:12px;color:var(--muted);">142</span>
+              <span class="cdi-dash-roi">$98,400</span>
+              <span class="cdi-dash-gaps">$41K</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Hospitalist</span>
+              <span style="font-size:12px;color:var(--muted);">98</span>
+              <span class="cdi-dash-roi">$72,200</span>
+              <span class="cdi-dash-gaps">$28K</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Cardiology</span>
+              <span style="font-size:12px;color:var(--muted);">61</span>
+              <span class="cdi-dash-roi">$43,600</span>
+              <span class="cdi-dash-gaps">$20K</span>
+            </div>
+            <div class="cdi-dash-row">
+              <span class="cdi-dash-physician">Pulmonology</span>
+              <span style="font-size:12px;color:var(--muted);">44</span>
+              <span class="cdi-dash-roi">$19,800</span>
+              <span class="cdi-dash-gaps" style="color:var(--muted);background:var(--bg);border-color:var(--border);">—</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -566,39 +820,136 @@
     <div class="demo-section-inner">
       <div class="demo-section-header">
         <p class="section-kicker">See it in action</p>
-        <h2 class="section-heading" style="margin-bottom:6px;">Clari<span style="color:#60a5fa">DI</span> flags gaps as you write</h2>
-        <p class="demo-disclaimer">Concept visualization — real EMR integration surfaces suggestions natively in your existing workflow, without leaving the note.</p>
+        <h2 class="section-heading" style="margin-bottom:6px;" id="demoHeading">Clari<span class="di">DI</span> flags gaps as you write</h2>
+        <p class="demo-disclaimer" id="demoSubtext">Gaps surface in a sidebar as the physician drafts the note — before they click sign. No retrospective queries, no CDI back-and-forth.</p>
+        <div class="demo-view-tabs">
+          <button class="demo-view-tab active" onclick="switchDemoTab('demo-physician')">Physician</button>
+          <button class="demo-view-tab" onclick="switchDemoTab('demo-cdi')">CDI Specialist</button>
+          <button class="demo-view-tab" onclick="switchDemoTab('demo-owner')">Practice Owner</button>
+        </div>
       </div>
 
-      <div class="live-demo">
-        <div class="demo-editor">
-          <div class="demo-editor-header">
+      <!-- Physician demo -->
+      <div class="demo-view-panel active" id="demo-physician">
+        <div class="live-demo">
+          <div class="demo-editor">
+            <div class="demo-editor-header">
+              <div>
+                <div class="demo-editor-title">Progress Note — Internal Medicine</div>
+                <span class="demo-editor-sub">J. Doe · 55M · In progress</span>
+              </div>
+              <span class="status-pill status-unsigned">Unsigned</span>
+            </div>
+            <div class="demo-editor-body">
+              <div id="demoText" class="demo-typewriter"></div>
+              <span class="demo-cursor" id="demoCursor">|</span>
+            </div>
+          </div>
+          <div class="demo-flags-panel">
+            <div class="demo-flags-header">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span style="letter-spacing:0">Clari<span class="di">DI</span></span> Suggestions
+              <span id="demoFlagCount" class="demo-flag-count clean">Monitoring...</span>
+            </div>
+            <div id="demoFlags" class="demo-flags-list">
+              <div class="demo-empty-state" id="demoEmpty">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>Monitoring note...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CDI Specialist demo -->
+      <div class="demo-view-panel" id="demo-cdi">
+        <div class="cdi-spec-demo">
+          <div class="cdi-queue">
+            <div class="cdi-queue-header">
+              <span class="cdi-queue-title">CDI Workqueue · Apr 19</span>
+              <span class="cdi-queue-badge">8 notes pending</span>
+            </div>
+            <div class="cdi-queue-row selected">
+              <div><div class="cdi-queue-patient">J. Doe, 55M</div><div class="cdi-queue-meta">Dr. R. Patel · Internal Med</div></div>
+              <div class="cdi-queue-right"><div class="cdi-queue-gaps">3 gaps</div><div class="cdi-queue-roi">$12,800</div><span class="cdi-queue-status open">Open</span></div>
+            </div>
+            <div class="cdi-queue-row">
+              <div><div class="cdi-queue-patient">M. Garcia, 67F</div><div class="cdi-queue-meta">Dr. A. Torres · Hospitalist</div></div>
+              <div class="cdi-queue-right"><div class="cdi-queue-gaps">2 gaps</div><div class="cdi-queue-roi">$9,200</div><span class="cdi-queue-status open">Open</span></div>
+            </div>
+            <div class="cdi-queue-row">
+              <div><div class="cdi-queue-patient">R. Kim, 44M</div><div class="cdi-queue-meta">Dr. M. Chen · Cardiology</div></div>
+              <div class="cdi-queue-right"><div class="cdi-queue-gaps">1 gap</div><div class="cdi-queue-roi">$4,800</div><span class="cdi-queue-status sent">Sent</span></div>
+            </div>
+            <div class="cdi-queue-row">
+              <div><div class="cdi-queue-patient">L. Brown, 72F</div><div class="cdi-queue-meta">Dr. S. Johnson · Internal Med</div></div>
+              <div class="cdi-queue-right"><div class="cdi-queue-gaps" style="color:var(--success);">Clean</div><div class="cdi-queue-roi">—</div><span class="cdi-queue-status clean">Reviewed</span></div>
+            </div>
+            <div class="cdi-queue-row">
+              <div><div class="cdi-queue-patient">T. Wilson, 58M</div><div class="cdi-queue-meta">Dr. R. Patel · Hospitalist</div></div>
+              <div class="cdi-queue-right"><div class="cdi-queue-gaps">2 gaps</div><div class="cdi-queue-roi">$7,600</div><span class="cdi-queue-status open">Open</span></div>
+            </div>
+          </div>
+          <div class="cdi-detail">
+            <div class="cdi-detail-header">J. Doe · 55M · Internal Medicine</div>
+            <div class="cdi-detail-sub">Dr. R. Patel · 3 gaps found · Est. $12,800</div>
+            <div class="cdi-finding">
+              <div class="cdi-finding-top"><span class="cdi-finding-title">Acute Respiratory Failure not documented</span><span class="cdi-finding-roi">+$4,800</span></div>
+              <div class="cdi-finding-meta">Confidence 88% · MCC · J96.01</div>
+              <div class="cdi-finding-query">"O₂ sat 88% on room air with bibasilar rales and pulmonary edema on CXR supports hypoxic ARF. Please confirm and document if clinically appropriate."</div>
+              <button class="cdi-finding-btn">Send Query</button>
+            </div>
+            <div class="cdi-finding">
+              <div class="cdi-finding-top"><span class="cdi-finding-title">Sepsis not documented</span><span class="cdi-finding-roi">+$4,200</span></div>
+              <div class="cdi-finding-meta">Confidence 81% · MCC · A41.9</div>
+              <div class="cdi-finding-query">"WBC 18.4, hypotensive on arrival, blood cultures pending — meets SIRS criteria. Please specify sepsis and suspected source if clinically supported."</div>
+              <button class="cdi-finding-btn">Send Query</button>
+            </div>
+            <div class="cdi-finding">
+              <div class="cdi-finding-top"><span class="cdi-finding-title">HFmrEF not documented</span><span class="cdi-finding-roi">+$1,800</span></div>
+              <div class="cdi-finding-meta">Confidence 76% · CC · I50.20</div>
+              <div class="cdi-finding-query">"Echo EF 40% with pulmonary edema and bibasilar rales is consistent with HFmrEF. Please confirm and document type if applicable."</div>
+              <button class="cdi-finding-btn">Send Query</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice Owner demo -->
+      <div class="demo-view-panel" id="demo-owner">
+        <div class="owner-demo">
+          <div class="owner-demo-header">
+            <span class="owner-demo-title">Revenue Analytics — Apr 2026</span>
+            <span class="owner-demo-meta">All Specialties · Updated 6 min ago</span>
+          </div>
+          <div class="owner-demo-body">
+            <div class="owner-demo-stats">
+              <div class="owner-demo-stat"><div class="owner-demo-stat-val green">$214K</div><div class="owner-demo-stat-label">Captured MTD</div></div>
+              <div class="owner-demo-stat"><div class="owner-demo-stat-val blue">$89K</div><div class="owner-demo-stat-label">Open Opportunity</div></div>
+              <div class="owner-demo-stat"><div class="owner-demo-stat-val">71%</div><div class="owner-demo-stat-label">Capture Rate</div></div>
+              <div class="owner-demo-stat"><div class="owner-demo-stat-val red">11%</div><div class="owner-demo-stat-label">Denial Rate</div></div>
+            </div>
             <div>
-              <div class="demo-editor-title">Progress Note — Internal Medicine</div>
-              <span class="demo-editor-sub">J. Doe · 55M · In progress</span>
+              <div class="owner-panel-title">Payer denial rates</div>
+              <div class="payer-row"><span class="payer-name">Anthem Blue Cross</span><div class="payer-bar-wrap"><div class="payer-bar high" style="width:78%"></div></div><span class="payer-pct red" style="color:#dc2626;">18%</span></div>
+              <div class="payer-row"><span class="payer-name">United Healthcare</span><div class="payer-bar-wrap"><div class="payer-bar mid" style="width:52%"></div></div><span class="payer-pct" style="color:#f59e0b;">12%</span></div>
+              <div class="payer-row"><span class="payer-name">Aetna</span><div class="payer-bar-wrap"><div class="payer-bar mid" style="width:39%"></div></div><span class="payer-pct" style="color:#f59e0b;">9%</span></div>
+              <div class="payer-row"><span class="payer-name">Medicare</span><div class="payer-bar-wrap"><div class="payer-bar" style="width:22%"></div></div><span class="payer-pct" style="color:var(--success);">5%</span></div>
+              <div class="payer-row"><span class="payer-name">Medicaid</span><div class="payer-bar-wrap"><div class="payer-bar" style="width:17%"></div></div><span class="payer-pct" style="color:var(--success);">4%</span></div>
             </div>
-            <span class="status-pill status-unsigned">Unsigned</span>
-          </div>
-          <div class="demo-editor-body">
-            <div id="demoText" class="demo-typewriter"></div>
-            <span class="demo-cursor" id="demoCursor">|</span>
-          </div>
-        </div>
-
-        <div class="demo-flags-panel">
-          <div class="demo-flags-header">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Clari<span style="color:#60a5fa">DI</span> Suggestions
-            <span id="demoFlagCount" class="demo-flag-count clean">Monitoring...</span>
-          </div>
-          <div id="demoFlags" class="demo-flags-list">
-            <div class="demo-empty-state" id="demoEmpty">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <span>Monitoring note...</span>
+            <div>
+              <div class="owner-panel-title">Denial rate by rule</div>
+              <div class="rule-row"><span class="rule-name">Acute Resp. Failure</span><span class="rule-rate high">23%</span></div>
+              <div class="rule-row"><span class="rule-name">Sepsis</span><span class="rule-rate high">16%</span></div>
+              <div class="rule-row"><span class="rule-name">NSTEMI</span><span class="rule-rate mid">11%</span></div>
+              <div class="rule-row"><span class="rule-name">Pressure Ulcer</span><span class="rule-rate mid">9%</span></div>
+              <div class="rule-row"><span class="rule-name">Heart Failure</span><span class="rule-rate low">5%</span></div>
+              <div class="rule-row"><span class="rule-name">CKD Staging</span><span class="rule-rate low">3%</span></div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -606,20 +957,20 @@
   <div class="stats-section">
     <div class="stats-strip">
       <div class="stat">
-        <div class="stat-value">$6<span>.5K</span></div>
-        <div class="stat-label">Max revenue per finding<br/>(STEMI capture, FY2025)</div>
+        <div class="stat-value">48<span>h</span></div>
+        <div class="stat-label">Avg. delay before a CDI<br/>query reaches the physician</div>
       </div>
       <div class="stat">
-        <div class="stat-value">19<span>+</span></div>
-        <div class="stat-label">Clinical rules across<br/>cardiac, pulmonary, renal</div>
+        <div class="stat-value">$6<span>.5K</span></div>
+        <div class="stat-label">Max revenue per finding<br/>(STEMI capture, FY2025)</div>
       </div>
       <div class="stat">
         <div class="stat-value">&lt;2<span>s</span></div>
         <div class="stat-label">Per-note full audit<br/>with DRG analysis</div>
       </div>
       <div class="stat">
-        <div class="stat-value">HL7</div>
-        <div class="stat-label">FHIR-ready integration<br/>for any major EMR</div>
+        <div class="stat-value">~20<span>min</span></div>
+        <div class="stat-label">Saved per physician per shift<br/>vs. retrospective CDI queries</div>
       </div>
     </div>
   </div>
@@ -629,7 +980,7 @@
     <div class="impact-inner">
       <p class="impact-kicker">Revenue impact</p>
       <h2 class="impact-heading">The revenue is already in the notes. It just isn't documented.</h2>
-      <p class="impact-subhead">Industry benchmarks show the average inpatient practice leaves 8–12% of potential CC/MCC revenue uncaptured annually. Clari<span style="color:#5eead4">DI</span> closes that gap upstream — before the chart closes.</p>
+      <p class="impact-subhead">Industry benchmarks show the average inpatient practice leaves 8–12% of potential CC/MCC revenue uncaptured annually. Clari<span class="di">DI</span> closes that gap upstream — before the chart closes.</p>
 
       <div class="impact-metrics">
         <div class="impact-metric">
@@ -638,14 +989,24 @@
           <div class="impact-metric-sub">STEMI capture, FY2025 MS-DRG weights</div>
         </div>
         <div class="impact-metric">
-          <div class="impact-metric-value">19<em>+</em></div>
-          <div class="impact-metric-label">Clinical rules</div>
-          <div class="impact-metric-sub">Cardiac, pulmonary, sepsis, renal, and more</div>
+          <div class="impact-metric-value">8<em>–12%</em></div>
+          <div class="impact-metric-label">CC/MCC revenue left uncaptured</div>
+          <div class="impact-metric-sub">Industry avg. for inpatient practices annually</div>
         </div>
         <div class="impact-metric">
-          <div class="impact-metric-value">&lt;2<em>s</em></div>
-          <div class="impact-metric-label">Per-note audit</div>
-          <div class="impact-metric-sub">Full DRG analysis with physician query generation</div>
+          <div class="impact-metric-value">Day<em> 1</em></div>
+          <div class="impact-metric-label">Revenue captured</div>
+          <div class="impact-metric-sub">Upstream — before the chart closes, not at month-end</div>
+        </div>
+      </div>
+
+      <div style="background:rgba(94,234,212,0.06);border:1px solid rgba(94,234,212,0.15);border-radius:10px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:flex-start;gap:16px;">
+        <div style="flex-shrink:0;width:36px;height:36px;border-radius:8px;background:rgba(94,234,212,0.1);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">DRG Optimizer — included in every audit</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55;">Every note audit includes a full DRG tier analysis — your current DRG, the tier each finding moves you to, and the exact dollar delta between them. Not a range. Not an estimate. Computed from FY2025 MS-DRG weights.</div>
         </div>
       </div>
 
@@ -700,12 +1061,8 @@
       <div class="bottom-cta-actions">
         <form class="email-form" id="waitlistForm2" onsubmit="handleWaitlist2(event)">
           <input type="email" placeholder="your@hospital.com" required />
-          <button type="submit" class="btn-primary">Join the Beta</button>
+          <button type="submit" class="btn-primary">Join the Pilot Program</button>
         </form>
-        <button class="btn-secondary" onclick="openDemo()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Schedule a Demo
-        </button>
       </div>
       <p class="pilot-note">Questions? <strong><a href="mailto:hello@claridi.health" style="color:var(--teal);text-decoration:none;">hello@claridi.health</a></strong></p>
       <div class="success-msg" id="waitlistSuccess2" style="max-width:420px; margin: 16px auto 0;">
@@ -718,7 +1075,8 @@
   <!-- Footer -->
   <footer>
     <div class="footer-left">
-      &copy; 2026 Clari<span style="color:#60a5fa">DI</span> &mdash; <a href="mailto:hello@claridi.health">hello@claridi.health</a>
+      &copy; 2026 Clari<span class="di">DI</span> &mdash; <a href="mailto:hello@claridi.health">hello@claridi.health</a>
+      <br><span style="font-size:11px;color:#94a3b8;">Read-only by design — ClariDI never writes to your EHR. Physician responses and documentation changes live in your EMR's database, not ours.</span>
     </div>
     <div class="footer-right">
       <a class="footer-link" href="mailto:hello@claridi.health">
@@ -743,7 +1101,7 @@
   <div class="modal">
     <button class="modal-close" onclick="closeDemo()">&#10005;</button>
     <h2>Schedule a Demo</h2>
-    <p>See Clari<span style="color:#60a5fa">DI</span> audit a real clinical note — full DRG analysis, physician query generation, and revenue impact — in under two seconds.</p>
+    <p>See Clari<span class="di">DI</span> audit a real clinical note — full DRG analysis, physician query generation, and revenue impact — in under two seconds.</p>
 
     <div class="success-msg" id="demoSuccess" style="margin-bottom:16px;">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -786,6 +1144,33 @@
 </div>
 
 <script>
+  const DEMO_COPY = {
+    'demo-physician': {
+      heading: 'Clari<span class="di">DI</span> flags gaps as you write',
+      sub: 'Gaps surface in a sidebar as the physician drafts the note — before they click sign. No retrospective queries, no CDI back-and-forth.'
+    },
+    'demo-cdi': {
+      heading: 'Every note pre-screened. Every query ready to send.',
+      sub: 'The CDI workqueue shows every note audited, ranked by revenue opportunity. Query templates are pre-written — one click to send, no manual research required.'
+    },
+    'demo-owner': {
+      heading: 'Revenue intelligence. By payer. By rule.',
+      sub: 'See exactly which payers push back hardest and which documentation gaps get denied most — so your team focuses where it matters.'
+    }
+  };
+  function switchDemoTab(id) {
+    document.querySelectorAll('.demo-view-tab').forEach(t => t.classList.toggle('active', t.getAttribute('onclick').includes(id)));
+    document.querySelectorAll('.demo-view-panel').forEach(p => p.classList.toggle('active', p.id === id));
+    const copy = DEMO_COPY[id];
+    if (copy) {
+      document.getElementById('demoHeading').innerHTML = copy.heading;
+      document.getElementById('demoSubtext').textContent = copy.sub;
+    }
+  }
+  function switchTab(id) {
+    document.querySelectorAll('.for-tab').forEach((t,i) => t.classList.toggle('active', ['physicians','cdi','owners'][i] === id));
+    document.querySelectorAll('.for-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
+  }
   function handleWaitlist(e) { e.preventDefault(); document.getElementById('waitlistForm').style.display = 'none'; document.getElementById('waitlistSuccess').style.display = 'flex'; }
   function handleWaitlist2(e) { e.preventDefault(); document.getElementById('waitlistForm2').style.display = 'none'; document.getElementById('waitlistSuccess2').style.display = 'flex'; }
   function openDemo() { document.getElementById('demoModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
