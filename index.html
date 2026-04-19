@@ -1060,7 +1060,8 @@
       <p>We're onboarding 5 pilot sites for Q3 2026 — inpatient practices with 5,000+ admissions preferred. Early partners shape the product roadmap and receive preferred pricing.</p>
       <div class="bottom-cta-actions">
         <form class="email-form" id="waitlistForm2" onsubmit="handleWaitlist2(event)">
-          <input type="email" placeholder="your@hospital.com" required />
+          <input type="email" name="email" placeholder="your@hospital.com" required />
+          <input type="hidden" name="_subject" value="New Pilot Program Signup — ClariDI" />
           <button type="submit" class="btn-primary">Join the Pilot Program</button>
         </form>
       </div>
@@ -1109,21 +1110,22 @@
     </div>
 
     <form id="demoForm" onsubmit="handleDemo(event)">
+      <input type="hidden" name="_subject" value="New Demo Request — ClariDI" />
       <div class="modal-field">
         <label>Full Name</label>
-        <input type="text" placeholder="Dr. Jane Smith" required />
+        <input type="text" name="name" placeholder="Dr. Jane Smith" required />
       </div>
       <div class="modal-field">
         <label>Work Email</label>
-        <input type="email" placeholder="you@hospital.org" required />
+        <input type="email" name="email" placeholder="you@hospital.org" required />
       </div>
       <div class="modal-field">
         <label>Organization</label>
-        <input type="text" placeholder="General Hospital" required />
+        <input type="text" name="organization" placeholder="General Hospital" required />
       </div>
       <div class="modal-field">
         <label>Role</label>
-        <select required>
+        <select name="role" required>
           <option value="" disabled selected>Select your role</option>
           <option>Hospitalist / Attending Physician</option>
           <option>CDI Specialist</option>
@@ -1136,7 +1138,7 @@
       </div>
       <div class="modal-field">
         <label>Anything specific to cover? (optional)</label>
-        <textarea rows="3" placeholder="e.g. We're focused on cardiac DRG capture across 3 hospitals..."></textarea>
+        <textarea name="message" rows="3" placeholder="e.g. We're focused on cardiac DRG capture across 3 hospitals..."></textarea>
       </div>
       <button type="submit" class="btn-demo-submit">Submit Request</button>
     </form>
@@ -1172,11 +1174,31 @@
     document.querySelectorAll('.for-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
   }
   function handleWaitlist(e) { e.preventDefault(); document.getElementById('waitlistForm').style.display = 'none'; document.getElementById('waitlistSuccess').style.display = 'flex'; }
-  function handleWaitlist2(e) { e.preventDefault(); document.getElementById('waitlistForm2').style.display = 'none'; document.getElementById('waitlistSuccess2').style.display = 'flex'; }
+  async function handleWaitlist2(e) {
+    e.preventDefault();
+    const form = document.getElementById('waitlistForm2');
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Submitting...'; btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mlgankrr', { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+      if (res.ok) { form.style.display = 'none'; document.getElementById('waitlistSuccess2').style.display = 'flex'; }
+      else { btn.textContent = 'Try again'; btn.disabled = false; }
+    } catch { btn.textContent = 'Try again'; btn.disabled = false; }
+  }
   function openDemo() { document.getElementById('demoModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeDemo() { document.getElementById('demoModal').classList.remove('open'); document.body.style.overflow = ''; }
   function closeOnOverlay(e) { if (e.target === document.getElementById('demoModal')) closeDemo(); }
-  function handleDemo(e) { e.preventDefault(); document.getElementById('demoForm').style.display = 'none'; document.getElementById('demoSuccess').style.display = 'flex'; setTimeout(closeDemo, 2800); }
+  async function handleDemo(e) {
+    e.preventDefault();
+    const form = document.getElementById('demoForm');
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Submitting...'; btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mgorybwk', { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+      if (res.ok) { form.style.display = 'none'; document.getElementById('demoSuccess').style.display = 'flex'; setTimeout(closeDemo, 2800); }
+      else { btn.textContent = 'Try again'; btn.disabled = false; }
+    } catch { btn.textContent = 'Try again'; btn.disabled = false; }
+  }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
 
   const NOTE_SEGMENTS = [
